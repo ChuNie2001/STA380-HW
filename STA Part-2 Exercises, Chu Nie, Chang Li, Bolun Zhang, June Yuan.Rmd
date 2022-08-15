@@ -1,15 +1,18 @@
 ---
 title: "STA Part-2 Exercises"
-author: "Chu Nie","Chang Li","Bolun Zhang","June Yuan"
+author: "Chu Nie, Chang Li, Bolun Zhang, June Yuan"
 date: "2022/8/6"
 output: pdf_document
 url: 'https://github.com/ChuNie2001/STA380-HW.git'
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = FALSE)
 ```
 
+```{r}
+
+```
 
 # Probability Practice
 
@@ -178,9 +181,10 @@ In the plot below, boarding and temperature in each 15-minute window are plotted
 capmetro_UT %>% ggplot()+geom_point(aes(x=temperature,y=boarding,color = weekend)) +facet_grid(cols=vars(hour_of_day),scales ="free")+ggtitle('Boarding vs. Temperature')+geom_hline(yintercept=mean(capmetro_UT$temperature), linetype="dashed", color = "black")
 ```
 In the plot above, we can tell weekdays tends to have significantly higher boarding amount in all the hours than weekends do. The boarding count is larger during the noon and afternoon time. In general, higher temperature will result in higher boarding count.
-```{r}
+```{r,fig.align='center'}
 capmetro_UT %>% ggplot()+geom_point(aes(x=temperature,y=alighting,color = weekend)) +facet_grid(cols=vars(hour_of_day),scales ="free")+ggtitle('Alighting vs. temperature')+geom_hline(yintercept=mean(capmetro_UT$temperature), linetype="dashed", color = "black")
 ```
+
 In the plot above, alighting and temperature in each 15-minute window are plotted, facetting by hour_of_day and coloring by weekend/weekday.The horizontal line is the average alighting.
 
 We can also tell weekdays tends to have significantly higher alighting amount in all the hours than weekends do. The alighting count is larger during the morning peak time. In general, higher temperature will result in higher boarding count no matter which hour. 
@@ -193,7 +197,7 @@ We can also tell weekdays tends to have significantly higher alighting amount in
 25% QQQ. QQQ tracks the Nasdaq-100, an index of the Nasdaq Stock Market's 100 largest nonfinancial members.
 25% VUG. VUG concentrates on large-cap U.S. based growth equities.
 25% VTI. VTI tracks the CRSP US total market Index's performance. its growth and value styles are appeared in large, mid, and small cap equity.
-```{r}
+```{r,fig.align='center'}
 library("mosaic")
 library("quantmod")
 library("foreach")
@@ -217,7 +221,7 @@ pairs(return)
 According to the graph, the earnings of these ETFs are highly connected. When one of the ETFs going up, the others will also going up, and when one of the ETFs going down, the others will also going down. This means all ETFs are moving with market trends. 
 
 Estimate the 20-day value at risk.
-```{r}
+```{r,fig.align='center'}
 return.day=resample(return,1,orig.ids=FALSE)
 
 
@@ -257,15 +261,15 @@ According to the graph, after a 20 day bootstrapped period, there is still a cha
 25% HDV
 25% DSI
 25% SDIV
-```{r}
+```{r,fig.align='center'}
 library(mosaic)
 library(quantmod)
 library(foreach)
 
 stock2 = c("SCHA", "HDV", "DSI", "SDIV")
-price2 = getSymbols(stock, from = "2016-08-13")
+price2 = getSymbols(stock2, from = "2016-08-13")
 
-for(ticker in stock) {
+for(ticker in stock2) {
 	expr = paste0(ticker, "a = adjustOHLC(", ticker, ")")
 	eval(parse(text=expr))
 }
@@ -281,7 +285,7 @@ pairs(return2)
 According to the graph, the correlation coefficient of these four ETFs is lower than the first group, which means this group has a higher value risky.
 
 Estimate the 20-day value at risk.
-```{r}
+```{r,fig.align='center'}
 return.day=resample(return2,1,orig.ids=FALSE)
 
 
@@ -322,7 +326,7 @@ According to the graph, after a 20 day period, there is still a chance of losing
 20% DSI
 20% VTI
 20% QQQ
-```{r}
+```{r,fig.align='center'}
 library(mosaic)
 library(quantmod)
 library(foreach)
@@ -346,7 +350,7 @@ pairs(return3)
 According to the graph, the correlation coefficient of these five ETFs is lower than the first group, which means this group has a higher value risky.
 
 Estimate the 20-day value at risk.
-```{r}
+```{r,fig.align='center'}
 return.day=resample(return3,1,orig.ids=FALSE)
 
 
@@ -524,12 +528,12 @@ scale_m = attr(market_scale,"scaled:scale")
 Here we want to exclude chatter, spam and adult columns due to the fact that these columns are used to catch a lot of uncategorized data.
 
 Now we need to decide the number of cluster we need for k-means
-```{r}
+```{r,fig.align='center'}
 wss = fviz_nbclust(market_scale, kmeans, method = "wss") 
 plot(wss)
 ```
 As we can see, there is much of an 'elbow' here. Here we choose 5 clusters as the number of clusters since the drop between 5 and 6 is not significant.
-```{r}
+```{r,fig.align='center'}
 #conduct knn with 5 clusters
 market_k = kmeans(market_scale, 5, nstart=25)
 
